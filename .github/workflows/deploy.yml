@@ -1,0 +1,28 @@
+﻿name: Deploy CarRent AI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: root
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /opt/carrent
+            git pull origin main
+            docker compose -f docker-compose.prod.yml build --no-cache backend frontend
+            docker compose -f docker-compose.prod.yml up -d
+            docker compose -f docker-compose.prod.yml exec -T backend python manage.py migrate
+            docker compose -f docker-compose.prod.yml exec -T backend python manage.py collectstatic --noinput
+            echo "Deployed at $(date)"

@@ -1,0 +1,17 @@
+﻿'use client'
+export default function Page() {
+  return (
+    <div style={{ padding: '32px' }}>
+      <h1 style={{ color: '#fff', fontSize: '24px', fontWeight: 'bold', margin: '0 0 8px' }}>
+        Knowledge Base
+      </h1>
+      <p style={{ color: '#64748b', marginBottom: '32px' }}>This section is coming soon.</p>
+      <div style={{
+        backgroundColor: '#0f172a', border: '1px solid #1e293b',
+        borderRadius: '12px', padding: '60px', textAlign: 'center', color: '#64748b',
+      }}>
+        Knowledge Base is being built.
+      </div>
+    </div>
+  )
+}
